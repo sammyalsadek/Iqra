@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 50 412 412">
-  <rect x="0" y="0" width="512" height="512" rx="96" fill="#5A8F6E"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#5A8F6E"/>
   <path d="M310 130 A140 140 0 1 0 310 382 A133 133 0 1 1 310 130Z" fill="#fff"/>
   <text x="280" y="50%" text-anchor="middle" dominant-baseline="central" font-family="'Amiri','Traditional Arabic',serif" font-size="130" fill="#fff">إقرأ</text>
 </svg>
