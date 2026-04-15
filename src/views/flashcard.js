@@ -200,6 +200,23 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     if (e.target.closest('.audio-btn')) return;
     flip();
   });
+
+  // Swipe navigation
+  let touchStartX = 0, touchStartY = 0;
+  const wrap = container.querySelector('#cardWrap');
+  wrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+    if (deck.length) {
+      idx = dx < 0 ? (idx + 1) % deck.length : (idx - 1 + deck.length) % deck.length;
+      updateCard();
+    }
+  }, { passive: true });
   container.querySelector('#audioBtn').addEventListener('click', e => {
     e.stopPropagation();
     if (deck.length) playWord(ALL[deck[idx]]);
