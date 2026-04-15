@@ -198,24 +198,47 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   });
   container.querySelector('#cardWrap').addEventListener('click', e => {
     if (e.target.closest('.audio-btn')) return;
+    if ('ontouchstart' in window) return;
     flip();
   });
 
-  // Swipe navigation
-  let touchStartX = 0, touchStartY = 0;
-  const wrap = container.querySelector('#cardWrap');
+  // Swipe navigation with drag animation
+  let touchStartX = 0, touchStartY = 0, isDragging = false;
+  const cardEl = container.querySelector('#card');
   wrap.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
+    isDragging = false;
+    cardEl.style.transition = 'none';
+  }, { passive: true });
+  wrap.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    if (!isDragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) isDragging = true;
+    if (isDragging) {
+      cardEl.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
+    }
   }, { passive: true });
   wrap.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
-    if (deck.length) {
-      idx = dx < 0 ? (idx + 1) % deck.length : (idx - 1 + deck.length) % deck.length;
-      updateCard();
+    if (isDragging && Math.abs(dx) > 80 && deck.length) {
+      const dir = dx < 0 ? 1 : -1;
+      cardEl.style.transition = 'transform 0.2s ease-out';
+      cardEl.style.transform = `translateX(${dir * 400}px) rotate(${dir * 15}deg)`;
+      setTimeout(() => {
+        idx = dx < 0 ? (idx + 1) % deck.length : (idx - 1 + deck.length) % deck.length;
+        cardEl.style.transition = 'none';
+        cardEl.style.transform = '';
+        updateCard();
+        requestAnimationFrame(() => { cardEl.style.transition = 'transform 0.5s'; });
+      }, 200);
+    } else {
+      cardEl.style.transition = 'transform 0.3s ease-out';
+      cardEl.style.transform = '';
+      setTimeout(() => { cardEl.style.transition = 'transform 0.5s'; }, 300);
+      if (!isDragging) flip();
     }
+    isDragging = false;
   }, { passive: true });
   container.querySelector('#audioBtn').addEventListener('click', e => {
     e.stopPropagation();
