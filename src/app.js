@@ -73,26 +73,35 @@ function initTheme() {
 }
 
 function toggleTheme() {
-  const wasDark = document.documentElement.classList.contains('dark') ||
-    (!document.documentElement.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const saved = getTheme();
   document.documentElement.classList.add('theme-transition');
   document.documentElement.classList.remove('dark', 'light');
-  if (wasDark) {
+  // Cycle: auto → light → dark → auto
+  if (!saved || saved === 'auto') {
     document.documentElement.classList.add('light');
     setTheme('light');
-  } else {
+  } else if (saved === 'light') {
     document.documentElement.classList.add('dark');
     setTheme('dark');
+  } else {
+    setTheme('auto');
   }
   updateThemeIcon();
   setTimeout(() => document.documentElement.classList.remove('theme-transition'), 500);
 }
 
 function updateThemeIcon() {
-  const isDark = document.documentElement.classList.contains('dark') ||
-    (!document.documentElement.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  themeBtn.innerHTML = isDark ? icons.sun : icons.moon;
-  themeBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  const saved = getTheme();
+  if (!saved || saved === 'auto') {
+    themeBtn.innerHTML = icons.monitor;
+    themeBtn.setAttribute('aria-label', 'Theme: auto (click for light)');
+  } else if (saved === 'light') {
+    themeBtn.innerHTML = icons.sun;
+    themeBtn.setAttribute('aria-label', 'Theme: light (click for dark)');
+  } else {
+    themeBtn.innerHTML = icons.moon;
+    themeBtn.setAttribute('aria-label', 'Theme: dark (click for auto)');
+  }
 }
 
 export function initApp() {
