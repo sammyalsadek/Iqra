@@ -206,6 +206,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   let touchStartX = 0, touchStartY = 0, isDragging = false, touchMoved = false;
   const wrapEl = container.querySelector('#cardWrap');
   wrapEl.addEventListener('touchstart', e => {
+    if (e.target.closest('.audio-btn')) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     isDragging = false;
@@ -218,9 +219,10 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     touchMoved = true;
     if (!isDragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) isDragging = true;
     if (isDragging) {
+      e.preventDefault();
       wrapEl.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
     }
-  }, { passive: true });
+  }, { passive: false });
   wrapEl.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     if (isDragging && Math.abs(dx) > 80 && deck.length) {

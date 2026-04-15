@@ -136,7 +136,7 @@ html.dark .app-title-dark { display: block; margin: 0 auto 0.5rem; }
 .counter { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem; }
 
 /* Card */
-.card-container { perspective: 1000px; -webkit-perspective: 1000px; width: min(440px, 88vw); height: 270px; margin-bottom: 1.375rem; cursor: pointer; }
+.card-container { perspective: 1000px; -webkit-perspective: 1000px; width: min(440px, 88vw); height: 270px; margin-bottom: 1.375rem; cursor: pointer; touch-action: pan-y; }
 .card-container.empty { cursor: default; }
 .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transition: transform 0.5s; }
 .card.flipped { transform: rotateY(180deg); }
