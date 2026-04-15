@@ -6,9 +6,9 @@ import { loadData } from './state.js';
 import { initApp } from './app.js';
 import { showOnboarding } from './onboarding.js';
 
-if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('/sw.js').catch(() => {});
-} else if ('serviceWorker' in navigator) {
+} else if ('serviceWorker' in navigator && location.hostname === 'localhost') {
   navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
   caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
 }
