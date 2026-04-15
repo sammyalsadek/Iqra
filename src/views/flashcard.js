@@ -78,7 +78,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
       <button type="button" class="btn-learning" data-mark="learning" aria-label="Learning">${icons.minus} Learning</button>
       <button type="button" class="btn-correct" data-mark="known" aria-label="Known">${icons.check} Known</button>
     </div>
-    <div class="hint" aria-hidden="true">Space = flip · Arrows = nav · A = audio · Esc = back</div>`;
+    <div class="hint" aria-hidden="true">Space = flip · Arrows = nav · 1/2/3 = mark · A = audio · Esc = back</div>`;
 
   // Populate freq filter
   const freqSel = container.querySelector('#freqFilter');
