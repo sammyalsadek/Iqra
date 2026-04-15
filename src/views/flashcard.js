@@ -56,30 +56,28 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     </div>
     <div class="counter" id="counter" aria-live="polite"></div>
     <div id="cardAnnounce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-    <div class="card-outer">
-      <button type="button" class="card-side-btn" id="prevBtn" aria-label="Previous card">${icons.chevronLeft}</button>
-      <div class="card-container" id="cardWrap" tabindex="0" role="button" aria-label="Flashcard, press space to flip">
-        <div class="card" id="card">
-          <div class="card-face card-front" id="cardFront">
-            <button type="button" class="card-flip-btn" id="flipBtn" aria-label="Flip card">${icons.flip}</button>
-            <div class="card-type" id="fType"></div>
-            <div class="card-arabic" id="fAr"></div>
-            <div class="card-controls">
-              <button type="button" class="card-ctrl-btn" id="audioBtn" aria-label="Play pronunciation">${icons.volume}</button>
-            </div>
-            <div class="card-root" id="fRoot"></div>
-            <div class="card-freq" id="fFreq"></div>
-          </div>
-          <div class="card-face card-back" id="cardBack">
-            <button type="button" class="card-flip-btn" id="flipBtn2" aria-label="Flip card">${icons.flip}</button>
-            <div class="card-type" id="bType"></div>
-            <div class="card-english" id="bEn"></div>
-            <div class="card-detail" id="bDet"></div>
-            <div class="card-freq" id="bFreq"></div>
-          </div>
+    <div class="card-container" id="cardWrap" tabindex="0" role="button" aria-label="Flashcard, press space to flip">
+      <div class="card" id="card">
+        <div class="card-face card-front" id="cardFront">
+          <button type="button" class="card-corner-btn card-corner-left" id="audioBtn" aria-label="Play pronunciation">${icons.volume}</button>
+          <button type="button" class="card-flip-btn" id="flipBtn" aria-label="Flip card">${icons.flip}</button>
+          <button type="button" class="card-side-btn card-side-left" id="prevBtn" aria-label="Previous card">${icons.chevronLeft}</button>
+          <button type="button" class="card-side-btn card-side-right" id="nextBtn" aria-label="Next card">${icons.chevronRight}</button>
+          <div class="card-type" id="fType"></div>
+          <div class="card-arabic" id="fAr"></div>
+          <div class="card-root" id="fRoot"></div>
+          <div class="card-freq" id="fFreq"></div>
+        </div>
+        <div class="card-face card-back" id="cardBack">
+          <button type="button" class="card-flip-btn" id="flipBtn2" aria-label="Flip card">${icons.flip}</button>
+          <button type="button" class="card-side-btn card-side-left" id="prevBtn2" aria-label="Previous card">${icons.chevronLeft}</button>
+          <button type="button" class="card-side-btn card-side-right" id="nextBtn2" aria-label="Next card">${icons.chevronRight}</button>
+          <div class="card-type" id="bType"></div>
+          <div class="card-english" id="bEn"></div>
+          <div class="card-detail" id="bDet"></div>
+          <div class="card-freq" id="bFreq"></div>
         </div>
       </div>
-      <button type="button" class="card-side-btn" id="nextBtn" aria-label="Next card">${icons.chevronRight}</button>
     </div>
     <div class="actions" id="actions">
       <button type="button" class="btn-wrong" data-mark="unseen" aria-label="Again">${icons.x} Again</button>
@@ -146,11 +144,11 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     cnt.textContent = (idx + 1) + ' / ' + deck.length;
     const c = ALL[deck[idx]];
     const st = getStatus(c);
-    container.querySelector('#card').classList.remove('flipped');
-    const front = container.querySelector('#cardFront');
-    const back = container.querySelector('#cardBack');
-    front.className = 'card-face card-front' + (st === 'learning' ? ' st-learning' : st === 'known' ? ' st-known' : '');
-    back.className = 'card-face card-back' + (st === 'learning' ? ' st-learning' : st === 'known' ? ' st-known' : '');
+    const cardInner = container.querySelector('#card');
+    cardInner.classList.remove('flipped');
+    // Force immediate style application
+    cardInner.style.transition = 'none';
+    // Update content
     container.querySelector('#fType').textContent = '';
     container.querySelector('#fAr').textContent = c.ar;
     container.querySelector('#fRoot').textContent = '';
@@ -159,6 +157,12 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     container.querySelector('#bEn').textContent = c.en || '(no translation)';
     container.querySelector('#bDet').textContent = '';
     container.querySelector('#bFreq').textContent = '\u00d7' + c.freq + ' in Quran';
+    const front = container.querySelector('#cardFront');
+    const back = container.querySelector('#cardBack');
+    front.className = 'card-face card-front' + (st === 'learning' ? ' st-learning' : st === 'known' ? ' st-known' : '');
+    back.className = 'card-face card-back' + (st === 'learning' ? ' st-learning' : st === 'known' ? ' st-known' : '');
+    // Re-enable transition after browser processes the unflipped state
+    setTimeout(() => { cardInner.style.transition = ''; }, 50);
     wrap.setAttribute('aria-label', 'Flashcard: Arabic word, press space to flip');
     const announce = container.querySelector('#cardAnnounce');
     announce.textContent = `Card ${idx + 1} of ${deck.length}. ${c.ar}. Press space to reveal meaning.`;
@@ -205,7 +209,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     });
   });
   container.querySelector('#cardWrap').addEventListener('click', e => {
-    if (e.target.closest('.card-ctrl-btn, .card-flip-btn, .card-side-btn')) return;
+    if (e.target.closest('.card-corner-btn, .card-flip-btn, .card-side-btn')) return;
     if ('ontouchstart' in window) return;
     flip();
   });
@@ -214,7 +218,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   let touchStartX = 0, touchStartY = 0, isDragging = false, touchMoved = false;
   const wrapEl = container.querySelector('#cardWrap');
   wrapEl.addEventListener('touchstart', e => {
-    if (e.target.closest('.card-ctrl-btn, .card-flip-btn')) return;
+    if (e.target.closest('.card-corner-btn, .card-flip-btn, .card-side-btn')) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     isDragging = false;
@@ -269,6 +273,12 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   });
   container.querySelector('#flipBtn').addEventListener('click', () => flip());
   container.querySelector('#flipBtn2').addEventListener('click', () => flip());
+  container.querySelector('#prevBtn2').addEventListener('click', () => {
+    if (deck.length) { idx = (idx - 1 + deck.length) % deck.length; updateCard(); }
+  });
+  container.querySelector('#nextBtn2').addEventListener('click', () => {
+    if (deck.length) { idx = (idx + 1) % deck.length; updateCard(); }
+  });
 
   // Keyboard
   const keyHandler = e => {
