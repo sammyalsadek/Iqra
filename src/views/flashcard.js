@@ -204,38 +204,38 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
 
   // Swipe navigation with drag animation
   let touchStartX = 0, touchStartY = 0, isDragging = false;
-  const cardEl = container.querySelector('#card');
-  wrap.addEventListener('touchstart', e => {
+  const wrapEl = container.querySelector('#cardWrap');
+  wrapEl.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     isDragging = false;
-    cardEl.style.transition = 'none';
+    wrapEl.style.transition = 'none';
   }, { passive: true });
-  wrap.addEventListener('touchmove', e => {
+  wrapEl.addEventListener('touchmove', e => {
     const dx = e.touches[0].clientX - touchStartX;
     const dy = e.touches[0].clientY - touchStartY;
     if (!isDragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) isDragging = true;
     if (isDragging) {
-      cardEl.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
+      wrapEl.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
     }
   }, { passive: true });
-  wrap.addEventListener('touchend', e => {
+  wrapEl.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     if (isDragging && Math.abs(dx) > 80 && deck.length) {
       const dir = dx < 0 ? 1 : -1;
-      cardEl.style.transition = 'transform 0.2s ease-out';
-      cardEl.style.transform = `translateX(${dir * 400}px) rotate(${dir * 15}deg)`;
+      wrapEl.style.transition = 'transform 0.2s ease-out';
+      wrapEl.style.transform = `translateX(${dir * 400}px) rotate(${dir * 15}deg)`;
       setTimeout(() => {
         idx = dx < 0 ? (idx + 1) % deck.length : (idx - 1 + deck.length) % deck.length;
-        cardEl.style.transition = 'none';
-        cardEl.style.transform = '';
+        wrapEl.style.transition = 'none';
+        wrapEl.style.transform = '';
         updateCard();
-        requestAnimationFrame(() => { cardEl.style.transition = 'transform 0.5s'; });
+        requestAnimationFrame(() => { wrapEl.style.transition = ''; });
       }, 200);
     } else {
-      cardEl.style.transition = 'transform 0.3s ease-out';
-      cardEl.style.transform = '';
-      setTimeout(() => { cardEl.style.transition = 'transform 0.5s'; }, 300);
+      wrapEl.style.transition = 'transform 0.3s ease-out';
+      wrapEl.style.transform = '';
+      setTimeout(() => { wrapEl.style.transition = ''; }, 300);
       if (!isDragging) flip();
     }
     isDragging = false;
@@ -256,7 +256,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
       if (['ArrowLeft', 'ArrowRight'].includes(e.key)) { e.target.blur(); e.preventDefault(); }
       return;
     }
-    if (e.target.closest('button, a, [role="button"]')) return;
+    if (e.target.closest('button, a, [role="button"]') && !e.target.closest('#cardWrap')) return;
     if (e.key === ' ' && !e.target.closest('button, select, a')) { e.preventDefault(); flip(); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); if (deck.length) { idx = (idx + 1) % deck.length; updateCard(); } }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); if (deck.length) { idx = (idx - 1 + deck.length) % deck.length; updateCard(); } }
