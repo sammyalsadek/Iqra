@@ -1,0 +1,14 @@
+{
+  "name": "Iqra — Quran Vocabulary",
+  "short_name": "Iqra",
+  "description": "Quran vocabulary flashcards",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F7F4EE",
+  "theme_color": "#2D6A4F",
+  "icons": [
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

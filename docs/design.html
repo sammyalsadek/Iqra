@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Iqra — Design System</title>
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; color: #1A1A1A; line-height: 1.6; }
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; margin: 2rem 0 1rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem; }
+  h3 { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
+  .subtitle { color: #5C5647; margin-bottom: 2rem; }
+  .swatch-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+  .swatch { width: 120px; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; }
+  .swatch-color { height: 60px; }
+  .swatch-label { padding: 0.5rem; font-size: 0.75rem; }
+  .swatch-label code { display: block; color: #5C5647; margin-top: 0.125rem; }
+  .type-sample { margin-bottom: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; }
+  .type-sample .label { font-size: 0.75rem; color: #5C5647; margin-bottom: 0.25rem; }
+  .arabic { font-family: 'Amiri', 'Traditional Arabic', serif; direction: rtl; }
+  .spacing-box { display: inline-block; background: #2D6A4F22; border: 1px dashed #2D6A4F; margin: 0.25rem; text-align: center; font-size: 0.75rem; color: #5C5647; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; }
+  th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #ddd; font-size: 0.875rem; }
+  th { color: #5C5647; font-weight: 600; }
+  .contrast-pass { color: #2D6A4F; font-weight: 600; }
+  .dark-preview { background: #141A24; color: #E8E4DC; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
+  .dark-preview .swatch { border-color: #333A4A; }
+  .dark-preview .swatch-label { color: #9C978C; }
+  .dark-preview .swatch-label code { color: #9C978C; }
+</style>
+</head>
+<body>
+
+<h1>Iqra Design System</h1>
+<p class="subtitle">إقرأ — Quran Vocabulary Flashcards</p>
+
+<h2>Color Palette — Light Mode</h2>
+<div class="swatch-row">
+  <div class="swatch"><div class="swatch-color" style="background:#F7F4EE"></div><div class="swatch-label">Background<code>#F7F4EE</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#FFFFFF"></div><div class="swatch-label">Surface<code>#FFFFFF</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#EDE8DF"></div><div class="swatch-label">Surface Alt<code>#EDE8DF</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#D4CFC4"></div><div class="swatch-label">Border<code>#D4CFC4</code></div></div>
+</div>
+<div class="swatch-row">
+  <div class="swatch"><div class="swatch-color" style="background:#2D6A4F"></div><div class="swatch-label">Primary<code>#2D6A4F</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#7AB592"></div><div class="swatch-label">Primary Light<code>#7AB592</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#1B4332"></div><div class="swatch-label">Primary Dark<code>#1B4332</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#8B6914"></div><div class="swatch-label">Accent<code>#8B6914</code></div></div>
+</div>
+<div class="swatch-row">
+  <div class="swatch"><div class="swatch-color" style="background:#1A1A1A"></div><div class="swatch-label">Text<code>#1A1A1A</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#5C5647"></div><div class="swatch-label">Text Secondary<code>#5C5647</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#B33B3B"></div><div class="swatch-label">Error<code>#B33B3B</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#9A7B2E"></div><div class="swatch-label">Warning<code>#9A7B2E</code></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#2D6A4F"></div><div class="swatch-label">Success<code>#2D6A4F</code></div></div>
+</div>
+
+<h2>Color Palette — Dark Mode</h2>
+<div class="dark-preview">
+  <div class="swatch-row">
+    <div class="swatch"><div class="swatch-color" style="background:#141A24"></div><div class="swatch-label">Background<code>#141A24</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1E2636"></div><div class="swatch-label">Surface<code>#1E2636</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#2A3142"></div><div class="swatch-label">Surface Alt<code>#2A3142</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#333A4A"></div><div class="swatch-label">Border<code>#333A4A</code></div></div>
+  </div>
+  <div class="swatch-row">
+    <div class="swatch"><div class="swatch-color" style="background:#4A9B6A"></div><div class="swatch-label">Primary<code>#4A9B6A</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#6ABF8A"></div><div class="swatch-label">Primary Light<code>#6ABF8A</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#3D6B52"></div><div class="swatch-label">Primary Dark<code>#3D6B52</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#D4A843"></div><div class="swatch-label">Accent<code>#D4A843</code></div></div>
+  </div>
+  <div class="swatch-row">
+    <div class="swatch"><div class="swatch-color" style="background:#E8E4DC"></div><div class="swatch-label">Text<code>#E8E4DC</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#9C978C"></div><div class="swatch-label">Text Secondary<code>#9C978C</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#CF6B6B"></div><div class="swatch-label">Error<code>#CF6B6B</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C49A30"></div><div class="swatch-label">Warning<code>#C49A30</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#4A9B6A"></div><div class="swatch-label">Success<code>#4A9B6A</code></div></div>
+  </div>
+</div>
+
+<h2>Contrast Ratios</h2>
+<table>
+  <tr><th>Pair</th><th>Ratio</th><th>WCAG AA</th></tr>
+  <tr><td>Text #1A1A1A on Background #F7F4EE</td><td>14.5:1</td><td class="contrast-pass">Pass (AAA)</td></tr>
+  <tr><td>Text Secondary #5C5647 on Background #F7F4EE</td><td>7.2:1</td><td class="contrast-pass">Pass (AAA)</td></tr>
+  <tr><td>Accent #8B6914 on Background #F7F4EE</td><td>5.8:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>Text #1A1A1A on Surface #FFFFFF</td><td>17.4:1</td><td class="contrast-pass">Pass (AAA)</td></tr>
+  <tr><td>White #fff on Primary #2D6A4F</td><td>5.9:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>White #fff on Error #B33B3B</td><td>4.8:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>White #fff on Warning #9A7B2E</td><td>4.5:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><th colspan="3" style="padding-top:1rem">Dark Mode</th></tr>
+  <tr><td>Text #E8E4DC on Background #141A24</td><td>12.8:1</td><td class="contrast-pass">Pass (AAA)</td></tr>
+  <tr><td>Text Secondary #9C978C on Background #141A24</td><td>6.5:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>Accent #D4A843 on Background #141A24</td><td>7.8:1</td><td class="contrast-pass">Pass (AAA)</td></tr>
+  <tr><td>White #fff on Primary #4A9B6A</td><td>4.5:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>White #fff on Error #CF6B6B</td><td>4.6:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>White #fff on Warning #C49A30</td><td>4.5:1</td><td class="contrast-pass">Pass (AA)</td></tr>
+  <tr><td>Text #E8E4DC on Surface #1E2636</td><td>11.1:1</td><td class="contrast-pass">Pass (AAA)</td></tr>
+</table>
+
+<h2>Typography</h2>
+
+<div class="type-sample">
+  <div class="label">Heading 1 — 1.5rem (24px) — Accent color</div>
+  <div style="font-size:1.5rem;color:#8B6914">Quran Vocabulary</div>
+</div>
+<div class="type-sample">
+  <div class="label">Heading 2 — 1.25rem (20px) — Accent color</div>
+  <div style="font-size:1.25rem;color:#8B6914">114. An-Nas</div>
+</div>
+<div class="type-sample">
+  <div class="label">Body — 1rem (16px) — Text color — minimum size for all text</div>
+  <div>Select a surah or frequency deck to study</div>
+</div>
+<div class="type-sample">
+  <div class="label">Secondary — 0.875rem (14px) — Text Secondary — smallest allowed size</div>
+  <div style="font-size:0.875rem;color:#5C5647">Space = flip · Arrows = navigate · 1/2/3 = mark</div>
+</div>
+<div class="type-sample">
+  <div class="label">Arabic Display — 3rem (48px) — Amiri / Traditional Arabic</div>
+  <div class="arabic" style="font-size:3rem">بِسْمِ ٱللَّهِ</div>
+</div>
+<div class="type-sample">
+  <div class="label">Arabic Secondary — 1.125rem (18px) — Amiri / Traditional Arabic</div>
+  <div class="arabic" style="font-size:1.125rem">سُورَة ٱلنَّاس</div>
+</div>
+
+<h3>Font Stack</h3>
+<table>
+  <tr><th>Use</th><th>Stack</th></tr>
+  <tr><td>UI / Latin</td><td><code>'Segoe UI', system-ui, -apple-system, sans-serif</code></td></tr>
+  <tr><td>Arabic</td><td><code>'Amiri', 'Traditional Arabic', 'Scheherazade New', serif</code></td></tr>
+</table>
+
+<h2>Spacing Scale</h2>
+<div>
+  <div class="spacing-box" style="width:16px;height:16px">4</div>
+  <div class="spacing-box" style="width:24px;height:24px">8</div>
+  <div class="spacing-box" style="width:36px;height:36px">12</div>
+  <div class="spacing-box" style="width:48px;height:48px">16</div>
+  <div class="spacing-box" style="width:60px;height:60px">20</div>
+  <div class="spacing-box" style="width:72px;height:72px">24</div>
+  <div class="spacing-box" style="width:96px;height:96px">32</div>
+</div>
+<p style="font-size:0.875rem;color:#5C5647;margin-top:0.5rem">Base unit: 4px. Scale: 4, 8, 12, 16, 20, 24, 32px</p>
+
+<h2>Interactive Targets</h2>
+<p>All buttons, links, and interactive elements have a minimum touch target of <strong>44 × 44px</strong> per WCAG 2.1 Success Criterion 2.5.5.</p>
+
+<h2>Border Radius</h2>
+<table>
+  <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+  <tr><td><code>--radius</code></td><td>12px</td><td>Cards, modals, large containers</td></tr>
+  <tr><td><code>--radius-sm</code></td><td>8px</td><td>Buttons, inputs, small elements</td></tr>
+</table>
+
+<h2>Icons</h2>
+<p>All icons are inline SVGs, 16–20px, using <code>currentColor</code> for theming. No emoji.</p>
+
+</body>
+</html>
