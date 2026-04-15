@@ -203,17 +203,19 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   });
 
   // Swipe navigation with drag animation
-  let touchStartX = 0, touchStartY = 0, isDragging = false;
+  let touchStartX = 0, touchStartY = 0, isDragging = false, touchMoved = false;
   const wrapEl = container.querySelector('#cardWrap');
   wrapEl.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     isDragging = false;
+    touchMoved = false;
     wrapEl.style.transition = 'none';
   }, { passive: true });
   wrapEl.addEventListener('touchmove', e => {
     const dx = e.touches[0].clientX - touchStartX;
     const dy = e.touches[0].clientY - touchStartY;
+    touchMoved = true;
     if (!isDragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) isDragging = true;
     if (isDragging) {
       wrapEl.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
@@ -222,11 +224,11 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   wrapEl.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     if (isDragging && Math.abs(dx) > 80 && deck.length) {
-      const dir = dx < 0 ? 1 : -1;
+      const dir = dx > 0 ? 1 : -1;
       wrapEl.style.transition = 'transform 0.2s ease-out';
       wrapEl.style.transform = `translateX(${dir * 400}px) rotate(${dir * 15}deg)`;
       setTimeout(() => {
-        idx = dx < 0 ? (idx + 1) % deck.length : (idx - 1 + deck.length) % deck.length;
+        idx = dx > 0 ? (idx - 1 + deck.length) % deck.length : (idx + 1) % deck.length;
         wrapEl.style.transition = 'none';
         wrapEl.style.transform = '';
         updateCard();
@@ -236,7 +238,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
       wrapEl.style.transition = 'transform 0.3s ease-out';
       wrapEl.style.transform = '';
       setTimeout(() => { wrapEl.style.transition = ''; }, 300);
-      if (!isDragging) flip();
+      if (!touchMoved) flip();
     }
     isDragging = false;
   }, { passive: true });
