@@ -79,6 +79,10 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
         </div>
       </div>
     </div>
+    <div class="empty-card" id="emptyCard" style="display:none">
+      <p>You're all caught up!</p>
+      <p class="empty-card-sub">No cards match this filter. Try a different one or come back later for review.</p>
+    </div>
     <div class="actions" id="actions">
       <button type="button" class="btn-wrong" data-mark="unseen" aria-label="Again">${icons.x} Again</button>
       <button type="button" class="btn-learning" data-mark="learning" aria-label="Learning">${icons.minus} Learning</button>
@@ -136,10 +140,14 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     const wrap = container.querySelector('#cardWrap');
     const acts = container.querySelector('#actions');
     const cnt = container.querySelector('#counter');
+    const emptyCard = container.querySelector('#emptyCard');
     if (empty) {
       wrap.style.display = 'none'; acts.style.display = 'none';
-      cnt.textContent = 'No cards in this filter'; return;
+      cnt.textContent = '';
+      emptyCard.style.display = '';
+      return;
     }
+    emptyCard.style.display = 'none';
     wrap.style.display = ''; acts.style.display = '';
     cnt.textContent = (idx + 1) + ' / ' + deck.length;
     const c = ALL[deck[idx]];
