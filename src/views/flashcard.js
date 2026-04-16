@@ -69,9 +69,9 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
           <div class="card-freq" id="fFreq"></div>
         </div>
         <div class="card-face card-back" id="cardBack">
-          <button type="button" class="card-flip-btn" id="flipBtn2" aria-label="Flip card">${icons.flip}</button>
-          <button type="button" class="card-side-btn card-side-left" id="prevBtn2" aria-label="Previous card">${icons.chevronLeft}</button>
-          <button type="button" class="card-side-btn card-side-right" id="nextBtn2" aria-label="Next card">${icons.chevronRight}</button>
+          <button type="button" class="card-flip-btn" id="flipBtnBack" aria-label="Flip card">${icons.flip}</button>
+          <button type="button" class="card-side-btn card-side-left" id="prevBtnBack" aria-label="Previous card">${icons.chevronLeft}</button>
+          <button type="button" class="card-side-btn card-side-right" id="nextBtnBack" aria-label="Next card">${icons.chevronRight}</button>
           <div class="card-type" id="bType"></div>
           <div class="card-english" id="bEn"></div>
           <div class="card-detail" id="bDet"></div>
@@ -154,6 +154,8 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     const st = getStatus(c);
     const cardInner = container.querySelector('#card');
     cardInner.classList.remove('flipped');
+    container.querySelectorAll('#cardFront button').forEach(b => { b.tabIndex = 0; b.style.visibility = ''; });
+    container.querySelectorAll('#cardBack button').forEach(b => { b.tabIndex = -1; b.style.visibility = 'hidden'; });
     // Force immediate style application
     cardInner.style.transition = 'none';
     // Update content
@@ -176,7 +178,14 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     announce.textContent = `Card ${idx + 1} of ${deck.length}. ${c.ar}. Press space to reveal meaning.`;
   }
 
-  function flip() { if (deck.length) container.querySelector('#card').classList.toggle('flipped'); }
+  function flip() {
+    if (!deck.length) return;
+    const card = container.querySelector('#card');
+    card.classList.toggle('flipped');
+    const isFlipped = card.classList.contains('flipped');
+    container.querySelectorAll('#cardFront button').forEach(b => { b.tabIndex = isFlipped ? -1 : 0; b.style.visibility = isFlipped ? 'hidden' : ''; });
+    container.querySelectorAll('#cardBack button').forEach(b => { b.tabIndex = isFlipped ? 0 : -1; b.style.visibility = isFlipped ? '' : 'hidden'; });
+  }
 
   function mark(status) {
     if (!deck.length) return;
@@ -280,13 +289,15 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     if (deck.length) { idx = (idx + 1) % deck.length; updateCard(); }
   });
   container.querySelector('#flipBtn').addEventListener('click', () => flip());
-  container.querySelector('#flipBtn2').addEventListener('click', () => flip());
-  container.querySelector('#prevBtn2').addEventListener('click', () => {
+  container.querySelector('#flipBtnBack').addEventListener('click', () => flip());
+  container.querySelector('#prevBtnBack').addEventListener('click', () => {
     if (deck.length) { idx = (idx - 1 + deck.length) % deck.length; updateCard(); }
   });
-  container.querySelector('#nextBtn2').addEventListener('click', () => {
+  container.querySelector('#nextBtnBack').addEventListener('click', () => {
     if (deck.length) { idx = (idx + 1) % deck.length; updateCard(); }
   });
+  // Back buttons start hidden
+  container.querySelectorAll('#cardBack button').forEach(b => { b.tabIndex = -1; b.style.visibility = 'hidden'; });
 
   // Keyboard
   const keyHandler = e => {
