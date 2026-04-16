@@ -46,31 +46,28 @@ export function markCard(deck, idx, status, filter) {
   const prev = getProgress(c);
   const now = Date.now();
 
-  if (status === 'unseen') {
-    setProgress(c, { status: 'unseen', interval: 0, due: 0 });
-    if (filter === 'smart') {
+  if (filter === 'smart') {
+    if (status === 'unseen') {
+      setProgress(c, { status: 'unseen', interval: 0, due: 0 });
       const ci = deck.splice(idx, 1)[0];
       deck.splice(Math.min(idx + 5, deck.length), 0, ci);
       return idx >= deck.length ? 0 : idx;
-    }
-  } else if (status === 'learning') {
-    setProgress(c, { status: 'learning', interval: DAY, due: now + DAY });
-    if (filter === 'smart') {
+    } else if (status === 'learning') {
+      setProgress(c, { status: 'learning', interval: DAY, due: now + DAY });
       const ci = deck.splice(idx, 1)[0];
       deck.splice(Math.min(idx + 10, deck.length), 0, ci);
       return idx >= deck.length ? 0 : idx;
+    } else {
+      const prevInt = prev.interval || DAY;
+      const newInt = prevInt < DAY ? DAY : prevInt < 3 * DAY ? 3 * DAY : prevInt < 7 * DAY ? 7 * DAY : 30 * DAY;
+      setProgress(c, { status: 'known', interval: newInt, due: now + newInt });
+      deck.splice(idx, 1);
+      return Math.min(idx, Math.max(0, deck.length - 1));
     }
-  } else {
-    const prevInt = prev.interval || DAY;
-    const newInt = prevInt < DAY ? DAY : prevInt < 3 * DAY ? 3 * DAY : prevInt < 7 * DAY ? 7 * DAY : 30 * DAY;
-    setProgress(c, { status: 'known', interval: newInt, due: now + newInt });
-    if (filter === 'known' || filter === 'all') {
-      return (idx + 1) % deck.length;
-    }
-    deck.splice(idx, 1);
-    return Math.min(idx, Math.max(0, deck.length - 1));
   }
 
+  // Non-smart filters: just set status, no intervals
+  setProgress(c, { status: status, interval: 0, due: 0 });
   if (filter !== 'all' && status !== filter) {
     deck.splice(idx, 1);
     return Math.min(idx, Math.max(0, deck.length - 1));
