@@ -25,8 +25,12 @@ export function renderSettings(container, { onBack }) {
     </section>
     <section class="settings-section" aria-label="Feedback">
       <h3>Feedback</h3>
-      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=bug_report.md" target="_blank" rel="noopener" class="settings-btn">${icons.bug} Report a Bug</a>
-      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=feature_request.md" target="_blank" rel="noopener" class="settings-btn">${icons.zap} Request a Feature</a>
+      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=bug_report.md" target="_blank" rel="noopener" class="settings-btn">${icons.bug} Report a Bug <span class="settings-btn-ext">${icons.externalLink}</span></a>
+      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=feature_request.md" target="_blank" rel="noopener" class="settings-btn">${icons.zap} Request a Feature <span class="settings-btn-ext">${icons.externalLink}</span></a>
+    </section>
+    <section class="settings-section" aria-label="Support">
+      <h3>Support</h3>
+      <a href="https://ko-fi.com/sammyalsadek" target="_blank" rel="noopener" class="settings-btn">${icons.heart} Support this project <span class="settings-btn-ext">${icons.externalLink}</span></a>
     </section>`;
 
   container.querySelector('#backBtn').addEventListener('click', onBack);

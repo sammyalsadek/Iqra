@@ -239,6 +239,8 @@ html.dark .app-title-dark { display: block; margin: 0 auto 0.5rem; }
 }
 .settings-btn:hover { border-color: var(--border-hover); }
 a.settings-btn { text-decoration: none; }
+.settings-btn-ext { margin-left: auto; opacity: 0.4; display: flex; }
+.settings-btn-ext svg { width: 14px; height: 14px; }
 .settings-btn.danger { color: var(--error); }
 .settings-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
