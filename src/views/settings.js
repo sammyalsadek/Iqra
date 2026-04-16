@@ -22,6 +22,11 @@ export function renderSettings(container, { onBack }) {
       <button type="button" class="settings-btn" id="importBtn">${icons.upload} Import Progress</button>
       <input type="file" accept=".json" class="file-input-hidden" id="importFile" aria-hidden="true">
       <button type="button" class="settings-btn danger" id="resetAllBtn">${icons.trash} Reset All Progress</button>
+    </section>
+    <section class="settings-section" aria-label="Feedback">
+      <h3>Feedback</h3>
+      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=bug_report.md" target="_blank" rel="noopener" class="settings-btn">${icons.info} Report a Bug</a>
+      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=feature_request.md" target="_blank" rel="noopener" class="settings-btn">${icons.zap} Request a Feature</a>
     </section>`;
 
   container.querySelector('#backBtn').addEventListener('click', onBack);

@@ -238,6 +238,7 @@ html.dark .app-title-dark { display: block; margin: 0 auto 0.5rem; }
   font-size: 0.875rem; margin-bottom: 0.5rem; transition: border-color 0.2s;
 }
 .settings-btn:hover { border-color: var(--border-hover); }
+a.settings-btn { text-decoration: none; }
 .settings-btn.danger { color: var(--error); }
 .settings-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
