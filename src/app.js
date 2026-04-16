@@ -132,7 +132,11 @@ export function initApp() {
     </div>`;
 
   themeBtn = document.getElementById('themeToggle');
-  document.getElementById('settingsBtn').addEventListener('click', () => showView(renderSettings, { onBack: showSurahList }));
+  const settingsEl = document.getElementById('settingsBtn');
+  settingsEl.addEventListener('click', () => {
+    settingsEl.style.display = 'none';
+    showView(renderSettings, { onBack: () => { settingsEl.style.display = ''; showSurahList(); } });
+  });
   themeBtn.addEventListener('click', toggleTheme);
 
   initTheme();
