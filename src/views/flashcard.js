@@ -296,7 +296,6 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
       if (['ArrowLeft', 'ArrowRight'].includes(e.key)) { e.target.blur(); e.preventDefault(); }
       return;
     }
-    if (e.target.closest('button, a, [role="button"]') && !e.target.closest('#cardWrap')) return;
     if (e.key === ' ' && !e.target.closest('button, select, a')) { e.preventDefault(); flip(); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); if (deck.length) { idx = (idx + 1) % deck.length; updateCard(); } }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); if (deck.length) { idx = (idx - 1 + deck.length) % deck.length; updateCard(); } }
