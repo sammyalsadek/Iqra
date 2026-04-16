@@ -86,7 +86,6 @@ html.dark .app-title-dark { display: block; margin: 0 auto 0.5rem; }
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  margin-bottom: 1.25rem;
   font-size: 0.875rem;
   display: flex;
   align-items: center;

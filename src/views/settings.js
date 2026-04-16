@@ -1,6 +1,7 @@
 import { exportProgress, importProgress, resetAllProgress } from '../state.js';
 import { showModal } from '../components/modal.js';
 import { icons } from '../components/icons.js';
+import { setBackButton } from '../app.js';
 
 function showToast(text) {
   document.querySelectorAll('.toast').forEach(t => t.remove());
@@ -13,8 +14,8 @@ function showToast(text) {
 }
 
 export function renderSettings(container, { onBack }) {
+  setBackButton(onBack);
   container.innerHTML = `
-    <button type="button" class="back-btn" id="backBtn" aria-label="Back">${icons.arrowLeft} Back</button>
     <header class="surah-title"><h2>Settings</h2></header>
     <section class="settings-section" aria-label="Progress management">
       <h3>Progress</h3>
@@ -32,8 +33,6 @@ export function renderSettings(container, { onBack }) {
       <h3>Support</h3>
       <a href="https://ko-fi.com/sammyalsadek" target="_blank" rel="noopener" class="settings-btn">${icons.heart} Support this project <span class="settings-btn-ext">${icons.externalLink}</span></a>
     </section>`;
-
-  container.querySelector('#backBtn').addEventListener('click', onBack);
 
   container.querySelector('#exportBtn').addEventListener('click', () => {
     exportProgress();

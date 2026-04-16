@@ -15,14 +15,16 @@ function showToast(text) {
   setTimeout(() => el.remove(), 3000);
 }
 
+import { setBackButton } from '../app.js';
+
 let deck = [], idx = 0, surahCards = [];
 
 export function renderFlashcard(container, { title, subtitle, surahCards: cards, isFreqDeck, onBack }) {
   surahCards = cards;
   const ALL = getAll();
+  setBackButton(onBack);
 
   container.innerHTML = `
-    <button type="button" class="back-btn" id="backBtn" aria-label="Back">${icons.arrowLeft} Back</button>
     <div class="surah-title"><h2 id="cvTitle">${title}</h2><p id="cvSub" class="${isFreqDeck ? '' : 'arabic-subtitle'}">${subtitle}</p></div>
     <section class="mastery" style="max-width:500px;margin-top:1rem" aria-label="Deck mastery">
       <div class="mastery-label"><span id="masteryLabel">${isFreqDeck ? 'Deck' : 'Surah'} Mastery: </span><b id="surahPct">0%</b></div>
@@ -198,7 +200,6 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   }
 
   // Events
-  container.querySelector('#backBtn').addEventListener('click', onBack);
   container.querySelector('#statusFilter').addEventListener('change', function () { this.blur(); rebuild(); });
   freqSel.addEventListener('change', function () { this.blur(); rebuild(); });
   container.querySelector('#shuffleBtn').addEventListener('click', () => { shuffleDeck(deck); idx = 0; updateCard(); });

@@ -6,6 +6,13 @@ import { renderFlashcard } from './views/flashcard.js';
 import { renderSettings } from './views/settings.js';
 import { icons } from './components/icons.js';
 
+export function setBackButton(onBack) {
+  const slot = document.getElementById('navBack');
+  if (!onBack) { slot.innerHTML = ''; return; }
+  slot.innerHTML = `<button type="button" class="back-btn" id="globalBackBtn" aria-label="Back">${icons.arrowLeft} Back</button>`;
+  slot.querySelector('#globalBackBtn').addEventListener('click', onBack);
+}
+
 let mainEl, themeBtn;
 
 function cleanup() {
@@ -15,7 +22,12 @@ function cleanup() {
 
 function showView(renderFn, ...args) {
   cleanup();
-  mainEl.innerHTML = '';
+  const old = mainEl.querySelector('.view');
+  if (old) old.remove();
+  const splash = mainEl.querySelector('.splash');
+  if (splash) splash.remove();
+  // Clear back button
+  document.getElementById('navBack').innerHTML = '';
   const view = document.createElement('div');
   view.className = 'view active';
   mainEl.appendChild(view);
@@ -113,8 +125,11 @@ export function initApp() {
   nav.setAttribute('role', 'navigation');
   nav.setAttribute('aria-label', 'App controls');
   nav.innerHTML = `
-    <button type="button" class="nav-btn" id="settingsBtn" aria-label="Settings">${icons.settings}</button>
-    <button type="button" class="nav-btn" id="themeToggle" aria-label="Toggle theme">${icons.moon}</button>`;
+    <div id="navBack"></div>
+    <div class="nav-right">
+      <button type="button" class="nav-btn" id="settingsBtn" aria-label="Settings">${icons.settings}</button>
+      <button type="button" class="nav-btn" id="themeToggle" aria-label="Toggle theme">${icons.moon}</button>
+    </div>`;
 
   themeBtn = document.getElementById('themeToggle');
   document.getElementById('settingsBtn').addEventListener('click', () => showView(renderSettings, { onBack: showSurahList }));
