@@ -25,7 +25,7 @@ export function renderSettings(container, { onBack }) {
     </section>
     <section class="settings-section" aria-label="Feedback">
       <h3>Feedback</h3>
-      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=bug_report.md" target="_blank" rel="noopener" class="settings-btn">${icons.info} Report a Bug</a>
+      <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=bug_report.md" target="_blank" rel="noopener" class="settings-btn">${icons.bug} Report a Bug</a>
       <a href="https://github.com/sammyalsadek/Iqra/issues/new?template=feature_request.md" target="_blank" rel="noopener" class="settings-btn">${icons.zap} Request a Feature</a>
     </section>`;
 
