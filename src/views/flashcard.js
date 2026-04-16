@@ -153,11 +153,13 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     const c = ALL[deck[idx]];
     const st = getStatus(c);
     const cardInner = container.querySelector('#card');
+    // Disable transition, force reflow, then remove flipped
+    cardInner.style.transition = 'none';
+    void cardInner.offsetWidth;
     cardInner.classList.remove('flipped');
+    void cardInner.offsetWidth;
     container.querySelectorAll('#cardFront button').forEach(b => { b.tabIndex = 0; b.style.visibility = ''; });
     container.querySelectorAll('#cardBack button').forEach(b => { b.tabIndex = -1; b.style.visibility = 'hidden'; });
-    // Force immediate style application
-    cardInner.style.transition = 'none';
     // Update content
     container.querySelector('#fType').textContent = '';
     container.querySelector('#fAr').textContent = c.ar;
@@ -171,8 +173,9 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
     const back = container.querySelector('#cardBack');
     front.className = 'card-face card-front' + (st === 'learning' ? ' st-learning' : st === 'known' ? ' st-known' : '');
     back.className = 'card-face card-back' + (st === 'learning' ? ' st-learning' : st === 'known' ? ' st-known' : '');
-    // Re-enable transition after browser processes the unflipped state
-    setTimeout(() => { cardInner.style.transition = ''; }, 50);
+    // Re-enable flip transition
+    void cardInner.offsetWidth;
+    cardInner.style.transition = '';
     wrap.setAttribute('aria-label', 'Flashcard: Arabic word, press space to flip');
     const announce = container.querySelector('#cardAnnounce');
     announce.textContent = `Card ${idx + 1} of ${deck.length}. ${c.ar}. Press space to reveal meaning.`;
