@@ -192,6 +192,7 @@ html.dark .app-title-dark { display: block; margin: 0 auto 0.5rem; }
 .card-corner-btn:hover { opacity: 0.8; color: var(--text); }
 .card-corner-btn svg { width: 18px; height: 18px; }
 
+.card-side-btn, .card-flip-btn, .card-corner-btn { pointer-events: auto; }
 .actions { display: flex; gap: 0.75rem; margin-bottom: 1.125rem; }
 .actions button {
   padding: 0.75rem 1.5rem;

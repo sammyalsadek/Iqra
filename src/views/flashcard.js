@@ -270,7 +270,7 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
       wrapEl.style.transition = 'transform 0.3s ease-out';
       wrapEl.style.transform = '';
       setTimeout(() => { wrapEl.style.transition = ''; }, 300);
-      if (!touchMoved) flip();
+      if (!touchMoved && !e.target.closest('.card-corner-btn, .card-flip-btn, .card-side-btn')) flip();
     }
     isDragging = false;
   }, { passive: true });
