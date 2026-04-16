@@ -64,6 +64,9 @@ export function markCard(deck, idx, status, filter) {
     const prevInt = prev.interval || DAY;
     const newInt = prevInt < DAY ? DAY : prevInt < 3 * DAY ? 3 * DAY : prevInt < 7 * DAY ? 7 * DAY : 30 * DAY;
     setProgress(c, { status: 'known', interval: newInt, due: now + newInt });
+    if (filter === 'known' || filter === 'all') {
+      return (idx + 1) % deck.length;
+    }
     deck.splice(idx, 1);
     return Math.min(idx, Math.max(0, deck.length - 1));
   }
