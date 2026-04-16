@@ -24,6 +24,8 @@
     .splash-text{font-family:'Segoe UI',system-ui,sans-serif;font-size:.875rem;color:#5C5647}
     .splash-loader{width:160px;height:4px;background:#EDE8DF;border-radius:2px;overflow:hidden}
     .splash-loader-bar{width:40%;height:100%;background:#2D6A4F;border-radius:2px;animation:splash-slide 1.2s ease-in-out infinite}
+    .splash ~ .skip-link{display:none}
+    body:has(.splash) .skip-link{display:none}
     @keyframes splash-slide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
     @media(prefers-color-scheme:dark){
       html:not(.light) body{background:#141A24}
