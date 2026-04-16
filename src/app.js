@@ -114,6 +114,10 @@ function updateThemeIcon() {
     themeBtn.innerHTML = icons.moon;
     themeBtn.setAttribute('aria-label', 'Theme: dark (click for auto)');
   }
+  const isDark = document.documentElement.classList.contains('dark') ||
+    (!document.documentElement.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.querySelector('meta[name="theme-color"][media*="light"]').content = isDark ? '#141A24' : '#F7F4EE';
+  document.querySelector('meta[name="theme-color"][media*="dark"]').content = isDark ? '#141A24' : '#F7F4EE';
 }
 
 export function initApp() {
