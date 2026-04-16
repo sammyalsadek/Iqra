@@ -17,13 +17,40 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
   <link rel="preconnect" href="https://audio.qurancdn.com">
+  <style>
+    .splash{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1.5rem}
+    .splash-logo{display:block}
+    .splash-logo-dark{display:none}
+    .splash-text{font-family:'Segoe UI',system-ui,sans-serif;font-size:.875rem;color:#5C5647}
+    .splash-loader{width:160px;height:4px;background:#EDE8DF;border-radius:2px;overflow:hidden}
+    .splash-loader-bar{width:40%;height:100%;background:#2D6A4F;border-radius:2px;animation:splash-slide 1.2s ease-in-out infinite}
+    @keyframes splash-slide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+    @media(prefers-color-scheme:dark){
+      html:not(.light) body{background:#141A24}
+      html:not(.light) .splash-logo-light{display:none}html:not(.light) .splash-logo-dark{display:block}
+      html:not(.light) .splash-text{color:#9C978C}
+      html:not(.light) .splash-loader{background:#2A3142}
+      html:not(.light) .splash-loader-bar{background:#4A9B6A}
+    }
+    html.dark body{background:#141A24}
+    html.dark .splash-logo-light{display:none}html.dark .splash-logo-dark{display:block}
+    html.dark .splash-text{color:#9C978C}
+    html.dark .splash-loader{background:#2A3142}
+    html.dark .splash-loader-bar{background:#4A9B6A}
+  </style>
 </head>
 <body>
+  <script>
+    (function(){var t=localStorage.getItem('iqra-theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.add('light')})();
+  </script>
   <a href="#main" class="skip-link">Skip to content</a>
   <div id="app-nav"></div>
   <main id="main">
-    <div class="view active">
-      <p class="empty-msg">Loading...</p>
+    <div class="splash" id="splash">
+      <img src="/title-light.svg" alt="Iqra" class="splash-logo splash-logo-light" width="200" height="200">
+      <img src="/title-dark.svg" alt="Iqra" class="splash-logo splash-logo-dark" width="200" height="200">
+      <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+      <p class="splash-text">Loading vocabulary...</p>
     </div>
   </main>
   <footer class="app-footer">

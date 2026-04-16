@@ -21,6 +21,8 @@ fetch('/data/words.json')
     showOnboarding();
   })
   .catch(err => {
+    const splash = document.getElementById('splash');
+    if (splash) splash.remove();
     document.getElementById('main').innerHTML =
       `<div class="view active"><p class="empty-msg">Failed to load data. Please refresh.</p></div>`;
     console.error(err);
