@@ -11,13 +11,13 @@
   color: var(--text-secondary);
   font-size: 0.875rem;
 }
-.app-title { display: block; margin: 0 auto 0.5rem; }
+.app-title { display: block; margin: -3.5rem auto -2.5rem; }
 .app-title-dark { display: none; }
 html.dark .app-title-light { display: none; }
-html.dark .app-title-dark { display: block; margin: 0 auto 0.5rem; }
+html.dark .app-title-dark { display: block; margin: -3.5rem auto -2.5rem; }
 @media (prefers-color-scheme: dark) {
   html:not(.light) .app-title-light { display: none; }
-  html:not(.light) .app-title-dark { display: block; margin: 0 auto 0.5rem; }
+  html:not(.light) .app-title-dark { display: block; margin: -3.5rem auto -2.5rem; }
 }
 
 .view { display: none; flex-direction: column; align-items: center; padding: 2rem 1.5rem; }

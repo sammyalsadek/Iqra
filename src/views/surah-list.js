@@ -14,7 +14,6 @@ export function renderSurahList(container, { onOpenSurah, onOpenFreqDeck }) {
     <header class="app-header">
       <img src="/title-light.svg" alt="Iqra" class="app-title app-title-light" width="320" height="320">
       <img src="/title-dark.svg" alt="Iqra" class="app-title app-title-dark" width="320" height="320">
-      <p>Select a surah or frequency deck to study</p>
     </header>
     <section class="mastery" aria-label="Overall mastery">
       <div class="mastery-label">Quran Mastery: <b>${Math.round(gp)}%</b></div>
