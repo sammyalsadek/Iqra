@@ -19,7 +19,7 @@ import { setBackButton } from '../app.js';
 
 let deck = [], idx = 0, surahCards = [];
 
-export function renderFlashcard(container, { title, subtitle, surahCards: cards, isFreqDeck, onBack }) {
+export function renderFlashcard(container, { title, subtitle, surahCards: cards, isFreqDeck, surahNum, onBack }) {
   surahCards = cards;
   const ALL = getAll();
   setBackButton(onBack);
@@ -125,13 +125,19 @@ export function renderFlashcard(container, { title, subtitle, surahCards: cards,
   }
 
   function updateStats() {
-    let n = 0, l = 0, k = 0;
-    surahCards.forEach(i => { const st = getStatus(ALL[i]); if (st === 'unseen') n++; else if (st === 'learning') l++; else k++; });
+    let n = 0, l = 0, k = 0, totalFreq = 0, knownFreq = 0;
+    surahCards.forEach(i => {
+      const st = getStatus(ALL[i]);
+      if (st === 'unseen') n++; else if (st === 'learning') l++; else k++;
+      const f = surahNum && ALL[i].surahs[surahNum] ? ALL[i].surahs[surahNum].count : ALL[i].freq;
+      totalFreq += f;
+      if (st === 'known') knownFreq += f;
+    });
     container.querySelector('#sNew').textContent = n;
     container.querySelector('#sLrn').textContent = l;
     container.querySelector('#sKnw').textContent = k;
     container.querySelector('#sDeck').textContent = deck.length;
-    const pct = surahCards.length ? (k / surahCards.length) * 100 : 0;
+    const pct = totalFreq ? (knownFreq / totalFreq) * 100 : 0;
     container.querySelector('#surahPct').textContent = Math.round(pct) + '%';
     container.querySelector('#surahFill').style.width = pct + '%';
     const bar = container.querySelector('.mastery-bar');

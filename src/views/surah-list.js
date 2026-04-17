@@ -54,15 +54,15 @@ export function renderSurahList(container, { onOpenSurah, onOpenFreqDeck }) {
   // Freq grid
   let freqHtml = '';
   FREQ_RANGES.forEach((fr, ri) => {
-    let t = 0, k = 0;
-    ALL.forEach(c => { if (c.freq >= fr.min && c.freq <= fr.max) { t++; if (getStatus(c) === 'known') k++; } });
-    if (!t) return;
-    const pct = (k / t) * 100;
-    freqHtml += `<div class="grid-card" role="listitem" tabindex="0" data-freq="${ri}" aria-label="${fr.label}, ${t} words, ${Math.round(pct)}% complete">
+    let count = 0, totalFreq = 0, knownFreq = 0;
+    ALL.forEach(c => { if (c.freq >= fr.min && c.freq <= fr.max) { count++; totalFreq += c.freq; if (getStatus(c) === 'known') knownFreq += c.freq; } });
+    if (!count) return;
+    const pct = totalFreq ? (knownFreq / totalFreq) * 100 : 0;
+    freqHtml += `<div class="grid-card" role="listitem" tabindex="0" data-freq="${ri}" aria-label="${fr.label}, ${count} words, ${Math.round(pct)}% complete">
       <div>${progressRing(pct, Math.round(pct) + '%')}</div>
       <div class="grid-card-info">
         <div class="grid-card-name">${fr.label}</div>
-        <div class="grid-card-meta">${t} words</div>
+        <div class="grid-card-meta">${count} words</div>
       </div>
     </div>`;
   });

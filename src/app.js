@@ -54,6 +54,7 @@ function openSurah(si) {
     subtitle: info[s]?.name_ar || '',
     surahCards,
     isFreqDeck: false,
+    surahNum: s,
     onBack: showSurahList,
   });
 }
@@ -68,6 +69,7 @@ function openFreqDeck(ri) {
     subtitle: 'Frequency-based deck',
     surahCards,
     isFreqDeck: true,
+    surahNum: null,
     onBack: showSurahList,
   });
 }
