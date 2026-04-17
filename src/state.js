@@ -10,7 +10,8 @@ export function loadData(data) {
   ALL = (data.words || []).map(w => ({
     ar: w.ar, en: w.en || '', root: w.root || '', lemma: w.lemma || '',
     pos: w.pos || '', grammar: w.grammar || '', freq: w.freq || 0,
-    surahs: w.surahs || {}, audio: w.audio || null
+    surahs: w.surahs || {}, audio: w.audio || null,
+    transliteration: w.transliteration || ''
   }));
   progress = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
 }
@@ -55,7 +56,7 @@ export function calcSurahMastery(si) {
   const s = String(si);
   let totalFreq = 0, knownFreq = 0;
   ALL.forEach(c => {
-    if (c.surahs[s]) { const f = c.surahs[s]; totalFreq += f; if (getStatus(c) === 'known') knownFreq += f; }
+    if (c.surahs[s]) { totalFreq += c.surahs[s].count; if (getStatus(c) === 'known') knownFreq += c.surahs[s].count; }
   });
   return totalFreq ? knownFreq / totalFreq : 0;
 }
