@@ -1,4 +1,6 @@
 node_modules/
 dist/
+.vscode/
+tags
 .DS_Store
 *.log

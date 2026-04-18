@@ -1,0 +1,22 @@
+.onboarding__steps {
+  text-align: left;
+}
+.onboarding__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.onboarding__step:last-child {
+  margin-bottom: 0.5rem;
+}
+.onboarding__icon {
+  flex-shrink: 0;
+  color: var(--primary);
+  width: 24px;
+  height: 24px;
+}
+.onboarding__icon svg {
+  width: 24px;
+  height: 24px;
+}

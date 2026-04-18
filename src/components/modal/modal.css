@@ -1,0 +1,22 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.modal-overlay > .card--default {
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  flex-direction: column;
+  padding: 1.75rem 1.5rem;
+}
+.modal__actions {
+  display: flex;
+  gap: 0.625rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}

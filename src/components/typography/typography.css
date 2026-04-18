@@ -1,0 +1,59 @@
+/* ============================================================
+ * Typography — text styles matching the design system.
+ *
+ * Design doc specs:
+ * - Heading 1: 1.5rem (24px) — accent color
+ * - Heading 2: 1.25rem (20px) — accent color
+ * - Body: 1rem (16px) — text color — minimum for body text
+ * - Secondary: 0.875rem (14px) — text-secondary — smallest allowed
+ * - Arabic display: 3rem (48px) — Amiri font
+ * - Arabic secondary: 1.125rem (18px) — Amiri font
+ * ============================================================ */
+
+.text--heading {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.text--subheading {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.text--body {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.text--secondary {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+.text--hint {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+.text--arabic-display {
+  font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+  font-size: 3rem;
+  direction: rtl;
+  color: var(--text);
+  line-height: 1.4;
+}
+.text--arabic-subtitle {
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  font-size: 1.5rem;
+  direction: rtl;
+  color: var(--text-secondary);
+}
+.text--english-display {
+  font-size: 1.25rem;
+  color: var(--text);
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .text--arabic-display {
+    font-size: 2.2rem;
+  }
+}

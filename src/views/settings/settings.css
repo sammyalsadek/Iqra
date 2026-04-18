@@ -1,0 +1,21 @@
+.settings__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.settings__title {
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+.settings__section {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+}
+.settings__section-title {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.settings__file-input {
+  display: none;
+}

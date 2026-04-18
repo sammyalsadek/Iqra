@@ -1,0 +1,39 @@
+/* Deck card inner layout */
+.deck-card__ring {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+.deck-card__info {
+  flex: 1;
+  min-width: 0;
+}
+.deck-card__name {
+  font-size: 0.875rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deck-card__subtitle {
+  font-size: 0.875rem;
+  color: var(--accent-dim);
+  margin-top: 0.125rem;
+}
+.deck-card__subtitle--arabic {
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  font-size: 1.125rem;
+  color: var(--accent-dim);
+  direction: rtl;
+  text-align: left;
+  unicode-bidi: plaintext;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0.125rem;
+}
+.deck-card__meta {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}

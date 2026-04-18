@@ -1,0 +1,32 @@
+.deck-list__header {
+  text-align: center;
+}
+.deck-list__logo {
+  display: block;
+  margin: -1.5rem auto -2.5rem;
+}
+.deck-list__logo--dark {
+  display: none;
+}
+html.dark .deck-list__logo--light {
+  display: none;
+}
+html.dark .deck-list__logo--dark {
+  display: block;
+  margin: -1.5rem auto -2.5rem;
+}
+@media (prefers-color-scheme: dark) {
+  html:not(.light) .deck-list__logo--light {
+    display: none;
+  }
+  html:not(.light) .deck-list__logo--dark {
+    display: block;
+    margin: -1.5rem auto -2.5rem;
+  }
+}
+@media (max-width: 500px) {
+  .deck-list__logo {
+    width: 220px !important;
+    height: 220px !important;
+  }
+}

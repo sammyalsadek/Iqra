@@ -1,0 +1,23 @@
+.deck-grid__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  justify-content: center;
+}
+.deck-grid__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.875rem;
+  width: 100%;
+  max-width: 960px;
+}
+@media (max-width: 820px) {
+  .deck-grid__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .deck-grid__grid {
+    grid-template-columns: 1fr;
+  }
+}

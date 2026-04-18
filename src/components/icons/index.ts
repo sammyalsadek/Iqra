@@ -1,0 +1,24 @@
+/* Re-export all icons from a single entry point. */
+export { arrowLeftIcon } from './arrow-left';
+export { barChartIcon } from './bar-chart';
+export { bookIcon } from './book';
+export { bugIcon } from './bug';
+export { checkIcon } from './check';
+export { chevronLeftIcon } from './chevron-left';
+export { chevronRightIcon } from './chevron-right';
+export { downloadIcon } from './download';
+export { externalLinkIcon } from './external-link';
+export { flipIcon } from './flip';
+export { heartIcon } from './heart';
+export { infoIcon } from './info';
+export { minusIcon } from './minus';
+export { monitorIcon } from './monitor';
+export { moonIcon } from './moon';
+export { settingsIcon } from './settings';
+export { shuffleIcon } from './shuffle';
+export { sunIcon } from './sun';
+export { trashIcon } from './trash';
+export { uploadIcon } from './upload';
+export { volumeIcon } from './volume';
+export { xIcon } from './x';
+export { zapIcon } from './zap';

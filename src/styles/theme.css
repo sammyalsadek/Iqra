@@ -1,31 +1,97 @@
-.app-nav {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 1.5rem 0;
-  min-height: 60px;
-}
-#navBack { margin-right: auto; }
-#navBack:empty { display: none; }
-.nav-right { display: flex; gap: 0.5rem; }
+/* ============================================================
+ * Theme — color schemes (light/dark) and transition animation.
+ * ============================================================ */
 
-.nav-btn {
-  padding: 0.5rem;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+/* ---- Light mode (default) ---- */
+:root {
+  --bg: #f7f4ee;
+  --surface: #ffffff;
+  --surface-alt: #ede8df;
+  --border: #d4cfc4;
+  --border-hover: #2d6a4f;
+  --primary: #2d6a4f;
+  --primary-light: #7ab592;
+  --primary-dark: #1b4332;
+  --accent: #8b6914;
+  --accent-dim: #a08540;
+  --text: #1a1a1a;
+  --text-secondary: #5c5647;
+  --error: #b33b3b;
+  --warning: #9a7b2e;
+  --success: #2d6a4f;
+  --card-bg: #ffffff;
+  --tint-learning: #fdf3d7;
+  --tint-known: #d4edda;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
-.nav-btn:hover {
-  border-color: var(--border-hover);
-  color: var(--text);
+
+/* ---- Dark mode (explicit) ---- */
+html.dark {
+  --bg: #141a24;
+  --surface: #1e2636;
+  --surface-alt: #2a3142;
+  --border: #333a4a;
+  --border-hover: #4a9b6a;
+  --primary: #4a9b6a;
+  --primary-light: #6abf8a;
+  --primary-dark: #3d6b52;
+  --accent: #d4a843;
+  --accent-dim: #8a7a3a;
+  --text: #e8e4dc;
+  --text-secondary: #9c978c;
+  --error: #cf6b6b;
+  --warning: #c49a30;
+  --success: #4a9b6a;
+  --card-bg: #1e2636;
+  --tint-learning: #3a2e10;
+  --tint-known: #1a3a2a;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
-.nav-btn svg { width: 20px; height: 20px; }
+
+/* ---- Dark mode (system preference) ---- */
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    --bg: #141a24;
+    --surface: #1e2636;
+    --surface-alt: #2a3142;
+    --border: #333a4a;
+    --border-hover: #4a9b6a;
+    --primary: #4a9b6a;
+    --primary-light: #6abf8a;
+    --primary-dark: #3d6b52;
+    --accent: #d4a843;
+    --accent-dim: #8a7a3a;
+    --text: #e8e4dc;
+    --text-secondary: #9c978c;
+    --error: #cf6b6b;
+    --warning: #c49a30;
+    --success: #4a9b6a;
+    --card-bg: #1e2636;
+    --tint-learning: #3a2e10;
+    --tint-known: #1a3a2a;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ---- Theme transition animation ---- */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background 0.4s ease,
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    fill 0.4s ease,
+    stroke 0.4s ease !important;
+}
+.theme-transition .flashcard {
+  transition:
+    transform 0.5s,
+    background 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease !important;
+}
