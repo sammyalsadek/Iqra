@@ -8,10 +8,7 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-invalid-void-type': 'off',
-      '@typescript-eslint/no-dynamic-delete': 'off',
-      'no-useless-escape': 'warn',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
     },
   },
   { ignores: ['dist/', 'public/', '*.config.*'] }

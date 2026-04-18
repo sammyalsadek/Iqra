@@ -41,7 +41,9 @@ export function setWordProgress(word: Word, progress: WordProgress): void {
 
 /** Reset progress for a list of words (by index into the word array). */
 export function resetWordsProgress(words: Word[], indices: number[]): void {
-  indices.forEach((index) => delete progressMap[words[index].ar]);
+  indices.forEach((index) => {
+    Reflect.deleteProperty(progressMap, words[index].ar);
+  });
   saveProgress();
 }
 

@@ -78,7 +78,7 @@ export function renderDeckStudyView(container: HTMLElement, props: DeckStudyProp
     </div>
     ${renderText({ text: '', variant: TextVariant.SECONDARY, id: 'cardCounter', ariaLive: 'polite', tag: 'div' })}
     ${renderFlashcard('flashcardContainer')}
-    ${renderCard({ variant: CardVariant.EMPTY, id: 'emptyCard', content: renderText({ text: "You\'re all caught up!", variant: TextVariant.BODY }) + renderText({ text: 'No cards match this filter. Try a different one or come back later for review.', variant: TextVariant.SECONDARY }) })}
+    ${renderCard({ variant: CardVariant.EMPTY, id: 'emptyCard', content: renderText({ text: 'You are all caught up!', variant: TextVariant.BODY }) + renderText({ text: 'No cards match this filter. Try a different one or come back later for review.', variant: TextVariant.SECONDARY }) })}
     <div class="deck-study__actions" id="markActions">
       ${renderButton({ label: 'Again', variant: ButtonVariant.PRIMARY, color: ButtonColor.ERROR, icon: xIcon, ariaLabel: 'Again', dataAttributes: { mark: 'unseen' } })}
       ${renderButton({ label: 'Learning', variant: ButtonVariant.PRIMARY, color: ButtonColor.WARNING, icon: minusIcon, ariaLabel: 'Learning', dataAttributes: { mark: 'learning' } })}

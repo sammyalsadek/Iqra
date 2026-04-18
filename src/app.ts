@@ -34,7 +34,7 @@ let currentCleanup: (() => void) | null = null;
 
 /* ---- View Management ---- */
 
-function showView(renderFn: (container: HTMLElement) => (() => void) | void): void {
+function showView(renderFn: (container: HTMLElement) => (() => void) | undefined): void {
   if (currentCleanup) {
     currentCleanup();
     currentCleanup = null;
@@ -79,6 +79,7 @@ function showDeckList(): void {
       onOpenSurah: openSurah,
       onOpenFrequencyDeck: openFrequencyDeck,
     });
+    return undefined;
   });
 }
 
