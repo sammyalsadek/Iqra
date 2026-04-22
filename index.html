@@ -24,10 +24,9 @@
     .splash-logo-dark{display:none}
     .splash-text{font-family:'Segoe UI',system-ui,sans-serif;font-size:.875rem;color:#5C5647}
     .splash-loader{width:160px;height:4px;background:#EDE8DF;border-radius:2px;overflow:hidden}
-    .splash-loader-bar{width:40%;height:100%;background:#2D6A4F;border-radius:2px;animation:splash-slide 1.2s ease-in-out infinite}
+    .splash-loader-bar{height:100%;background:#2D6A4F;border-radius:2px;will-change:transform}
     .splash ~ .skip-link{display:none}
     body:has(.splash) .skip-link{display:none}
-    @keyframes splash-slide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
     @media(prefers-color-scheme:dark){
       html:not(.light) body{background:#141A24}
       html:not(.light) .splash-logo-light{display:none}html:not(.light) .splash-logo-dark{display:block}
@@ -61,6 +60,28 @@
   <noscript>
     <p style="text-align:center;padding:2rem">JavaScript is required to use Iqra.</p>
   </noscript>
+  <script>
+    (function(){
+      var bar=document.querySelector('.splash-loader-bar');
+      if(!bar)return;
+      var track=160;
+      var dur=1100;
+      var start=performance.now();
+      function tick(now){
+        var t=(((now-start)%dur)/dur);/* 0→1 linear progress */
+        /* Ease: accelerate in middle, decelerate at edges */
+        var ease=t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+        /* Bar width: narrow at edges, wide in middle */
+        var width=32+40*Math.sin(t*Math.PI);
+        /* Position: start off-screen left, end off-screen right */
+        var x=-width+ease*(track+width);
+        bar.style.width=width+'px';
+        bar.style.transform='translateX('+x+'px)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
