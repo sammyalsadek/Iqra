@@ -20,6 +20,8 @@ import './deck-list.css';
 interface DeckListCallbacks {
   onOpenSurah: (surahNumber: number) => void;
   onOpenFrequencyDeck: (rangeIndex: number) => void;
+  activeTab?: 'surahs' | 'frequency';
+  onTabChange?: (tab: string) => void;
 }
 
 /** Render the deck list (home) view. */
@@ -92,10 +94,10 @@ export function renderDeckListView(container: HTMLElement, callbacks: DeckListCa
       <img src="/title-dark.svg" alt="Iqra" class="deck-list__logo deck-list__logo--dark" width="320" height="320">
     </header>
     ${renderProgressBar({ percentage: globalMasteryPercentage, label: 'Quran Mastery:' })}
-    ${renderDeckGrid({ activeTab: 'surahs', surahGridHtml, frequencyGridHtml })}`;
+    ${renderDeckGrid({ activeTab: callbacks.activeTab || 'surahs', surahGridHtml, frequencyGridHtml })}`;
 
   /* ---- Attach events ---- */
-  attachDeckGridTabs(container);
+  attachDeckGridTabs(container, callbacks.onTabChange);
 
   container.querySelectorAll<HTMLElement>('[data-surah]').forEach((element) => {
     const handler = () => callbacks.onOpenSurah(parseInt(element.dataset.surah!));

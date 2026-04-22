@@ -32,6 +32,8 @@ let settingsButton: HTMLElement;
 
 /** Current view cleanup function. */
 let currentCleanup: (() => void) | null = null;
+let isPoppingState = false;
+let activeTab: 'surahs' | 'frequency' = 'surahs';
 
 /* ---- View Management ---- */
 
@@ -72,13 +74,18 @@ function setBackButton(onBack: (() => void) | null): void {
 
 /* ---- Navigation ---- */
 
-function showDeckList(): void {
+function showDeckList(pushState = true): void {
   setBackButton(null);
-  settingsButton.style.display = '';
+  if (pushState && !isPoppingState) history.pushState({ view: 'decks', tab: activeTab }, '', '/');
   showView((container) => {
     renderDeckListView(container, {
       onOpenSurah: openSurah,
       onOpenFrequencyDeck: openFrequencyDeck,
+      activeTab,
+      onTabChange: (tab) => {
+        activeTab = tab as 'surahs' | 'frequency';
+        history.replaceState({ view: 'decks', tab: activeTab }, '', '/');
+      },
     });
     return undefined;
   });
@@ -90,7 +97,9 @@ function openSurah(surahNumber: number): void {
   const info = surahInfo[surahKey];
   const wordIndices = getWordIndicesForSurah(surahNumber);
   setCurrentSurah(surahNumber);
-  setBackButton(showDeckList);
+  setBackButton(() => history.back());
+  if (!isPoppingState)
+    history.pushState({ view: 'surah', surahNumber, tab: activeTab }, '', `/surah/${surahNumber}`);
 
   showView((container) =>
     renderDeckStudyView(container, {
@@ -99,7 +108,7 @@ function openSurah(surahNumber: number): void {
       wordIndices,
       isFrequencyDeck: false,
       surahNumber: surahKey,
-      onBack: showDeckList,
+      onBack: () => history.back(),
     }),
   );
 }
@@ -107,7 +116,9 @@ function openSurah(surahNumber: number): void {
 function openFrequencyDeck(rangeIndex: number): void {
   const range = FREQUENCY_RANGES[rangeIndex];
   const wordIndices = getWordIndicesForFrequencyRange(range);
-  setBackButton(showDeckList);
+  setBackButton(() => history.back());
+  if (!isPoppingState)
+    history.pushState({ view: 'freq', rangeIndex, tab: activeTab }, '', `/freq/${rangeIndex}`);
 
   showView((container) =>
     renderDeckStudyView(container, {
@@ -116,24 +127,19 @@ function openFrequencyDeck(rangeIndex: number): void {
       wordIndices,
       isFrequencyDeck: true,
       surahNumber: null,
-      onBack: showDeckList,
+      onBack: () => history.back(),
     }),
   );
 }
 
 function openSettings(): void {
   settingsButton.style.display = 'none';
-  setBackButton(() => {
-    settingsButton.style.display = '';
-    showDeckList();
-  });
+  setBackButton(() => history.back());
+  if (!isPoppingState) history.pushState({ view: 'settings', tab: activeTab }, '', '/settings');
 
   showView((container) =>
     renderSettingsView(container, {
-      onBack: () => {
-        settingsButton.style.display = '';
-        showDeckList();
-      },
+      onBack: () => history.back(),
     }),
   );
 }
@@ -206,9 +212,28 @@ export function initializeApp(data: WordsData): void {
   settingsButton = document.getElementById('settingsButton')!;
 
   themeButton.addEventListener('click', handleThemeToggle);
+
+  window.addEventListener('popstate', (event) => {
+    const state = event.state as {
+      view: string;
+      surahNumber?: number;
+      rangeIndex?: number;
+      tab?: string;
+    } | null;
+    isPoppingState = true;
+    settingsButton.style.display = state?.view === 'settings' ? 'none' : '';
+    if (state?.tab) activeTab = state.tab as 'surahs' | 'frequency';
+    if (state?.view === 'surah' && state.surahNumber) openSurah(state.surahNumber);
+    else if (state?.view === 'freq' && state.rangeIndex !== undefined)
+      openFrequencyDeck(state.rangeIndex);
+    else if (state?.view === 'settings') openSettings();
+    else showDeckList(false);
+    isPoppingState = false;
+  });
   settingsButton.addEventListener('click', openSettings);
 
   initializeTheme();
-  showDeckList();
+  history.replaceState({ view: 'decks', tab: activeTab }, '', '/');
+  showDeckList(false);
   showOnboarding();
 }

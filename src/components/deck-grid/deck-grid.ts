@@ -16,7 +16,10 @@ export function renderDeckGrid(props: DeckGridProps): string {
 }
 
 /** Attach tab switching behavior. */
-export function attachDeckGridTabs(container: HTMLElement): void {
+export function attachDeckGridTabs(
+  container: HTMLElement,
+  onTabChange?: (tab: string) => void,
+): void {
   container.querySelectorAll<HTMLElement>('[data-tab]').forEach((tabButton) => {
     tabButton.addEventListener('click', () => {
       const selectedTab = tabButton.dataset.tab;
@@ -29,6 +32,7 @@ export function attachDeckGridTabs(container: HTMLElement): void {
       const frequencyGrid = container.querySelector<HTMLElement>('#frequencyGrid')!;
       surahGrid.style.display = selectedTab === 'surahs' ? '' : 'none';
       frequencyGrid.style.display = selectedTab === 'frequency' ? '' : 'none';
+      if (onTabChange && selectedTab) onTabChange(selectedTab);
     });
   });
 }
