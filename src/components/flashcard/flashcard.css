@@ -49,6 +49,7 @@
 }
 
 /* Card content */
+#frontTransliteration,
 #frontFrequency,
 #backFrequency {
   margin-top: 0.75rem;
