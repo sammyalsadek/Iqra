@@ -6,7 +6,9 @@
 import type { Word, CardStatus } from '@/types';
 import { volumeIcon, flipIcon, chevronLeftIcon, chevronRightIcon } from '@/components/icons';
 import { renderButton } from '@/components/button/button';
+import { renderText } from '@/components/typography/typography';
 import { ButtonVariant } from '@/components/button/button.types';
+import { TextVariant } from '@/components/typography/typography.types';
 import './flashcard.css';
 
 /** Render the flashcard HTML. */
@@ -19,19 +21,16 @@ export function renderFlashcard(containerId: string): string {
           <div class="flashcard__corner-btn flashcard__corner-btn--right">${renderButton({ label: '', variant: ButtonVariant.ICON, icon: flipIcon, id: 'flipButtonFront', ariaLabel: 'Flip card' })}</div>
           <div class="flashcard__side-btn flashcard__side-btn--left">${renderButton({ label: '', variant: ButtonVariant.ICON, icon: chevronLeftIcon, id: 'prevButtonFront', ariaLabel: 'Previous card' })}</div>
           <div class="flashcard__side-btn flashcard__side-btn--right">${renderButton({ label: '', variant: ButtonVariant.ICON, icon: chevronRightIcon, id: 'nextButtonFront', ariaLabel: 'Next card' })}</div>
-          <div class="flashcard__type" id="frontType"></div>
-          <div class="flashcard__arabic" id="frontArabic"></div>
-          <div class="flashcard__root" id="frontRoot"></div>
-          <div class="flashcard__freq" id="frontFrequency"></div>
+          ${renderText({ text: '', variant: TextVariant.ARABIC_DISPLAY, id: 'frontArabic' })}
+          ${renderText({ text: '', variant: TextVariant.SECONDARY, id: 'frontTransliteration' })}
+          ${renderText({ text: '', variant: TextVariant.HINT, id: 'frontFrequency' })}
         </div>
         <div class="flashcard__face flashcard__face--back" id="flashcardBack">
           <div class="flashcard__corner-btn flashcard__corner-btn--right">${renderButton({ label: '', variant: ButtonVariant.ICON, icon: flipIcon, id: 'flipButtonBack', ariaLabel: 'Flip card' })}</div>
           <div class="flashcard__side-btn flashcard__side-btn--left">${renderButton({ label: '', variant: ButtonVariant.ICON, icon: chevronLeftIcon, id: 'prevButtonBack', ariaLabel: 'Previous card' })}</div>
           <div class="flashcard__side-btn flashcard__side-btn--right">${renderButton({ label: '', variant: ButtonVariant.ICON, icon: chevronRightIcon, id: 'nextButtonBack', ariaLabel: 'Next card' })}</div>
-          <div class="flashcard__type" id="backType"></div>
-          <div class="flashcard__english" id="backEnglish"></div>
-          <div class="flashcard__detail" id="backDetail"></div>
-          <div class="flashcard__freq" id="backFrequency"></div>
+          ${renderText({ text: '', variant: TextVariant.ENGLISH_DISPLAY, id: 'backEnglish' })}
+          ${renderText({ text: '', variant: TextVariant.HINT, id: 'backFrequency' })}
         </div>
       </div>
     </div>`;
@@ -74,13 +73,10 @@ export function updateFlashcardContent(
     `flashcard__face flashcard__face--back${statusClass}`;
 
   /* Update content */
-  container.querySelector('#frontType')!.textContent = '';
   container.querySelector('#frontArabic')!.textContent = word.ar;
-  container.querySelector('#frontRoot')!.textContent = '';
+  container.querySelector('#frontTransliteration')!.textContent = word.transliteration || '';
   container.querySelector('#frontFrequency')!.textContent = `×${word.freq} in Quran`;
-  container.querySelector('#backType')!.textContent = '';
   container.querySelector('#backEnglish')!.textContent = word.en || '(no translation)';
-  container.querySelector('#backDetail')!.textContent = '';
   container.querySelector('#backFrequency')!.textContent = `×${word.freq} in Quran`;
 }
 
