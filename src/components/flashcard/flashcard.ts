@@ -36,29 +36,31 @@ export function renderFlashcard(containerId: string): string {
     </div>`;
 }
 
+/** Set a face as active (visible, on top) and the other as inactive (hidden, behind). */
+function setActiveFace(container: HTMLElement, activeFaceId: string): void {
+  const front = container.querySelector<HTMLElement>('#flashcardFront')!;
+  const back = container.querySelector<HTMLElement>('#flashcardBack')!;
+  const isFront = activeFaceId === 'flashcardFront';
+
+  const active = isFront ? front : back;
+  const inactive = isFront ? back : front;
+
+  active.classList.add('flashcard__face--active');
+  inactive.classList.remove('flashcard__face--active');
+
+  /* Sync tab indices: active face interactive, inactive face not */
+  active.querySelectorAll<HTMLElement>('button').forEach((b) => (b.tabIndex = 0));
+  inactive.querySelectorAll<HTMLElement>('button').forEach((b) => (b.tabIndex = -1));
+}
+
 /** Update the flashcard content with a new word. */
 export function updateFlashcardContent(
   container: HTMLElement,
   word: Word,
   status: CardStatus,
 ): void {
-  const flashcard = container.querySelector<HTMLElement>('#flashcard')!;
-
-  /* Reset flip without animation */
-  flashcard.style.transition = 'none';
-  flashcard.classList.remove('flashcard--flipped');
-  void flashcard.offsetWidth;
-  flashcard.style.transition = '';
-
-  /* Reset button visibility */
-  container.querySelectorAll<HTMLElement>('#flashcardFront button').forEach((button) => {
-    button.tabIndex = 0;
-    button.style.visibility = '';
-  });
-  container.querySelectorAll<HTMLElement>('#flashcardBack button').forEach((button) => {
-    button.tabIndex = -1;
-    button.style.visibility = 'hidden';
-  });
+  /* Always reset to front face */
+  setActiveFace(container, 'flashcardFront');
 
   /* Update status tint */
   const statusClass =
@@ -68,7 +70,7 @@ export function updateFlashcardContent(
         ? ' flashcard__face--known'
         : '';
   container.querySelector('#flashcardFront')!.className =
-    `flashcard__face flashcard__face--front${statusClass}`;
+    `flashcard__face flashcard__face--front flashcard__face--active${statusClass}`;
   container.querySelector('#flashcardBack')!.className =
     `flashcard__face flashcard__face--back${statusClass}`;
 
@@ -80,19 +82,36 @@ export function updateFlashcardContent(
   container.querySelector('#backFrequency')!.textContent = `×${word.freq} in Quran`;
 }
 
+/** Whether a flip animation is currently running. */
+let isFlipping = false;
+
 /** Toggle the flip state of the flashcard. */
 export function toggleFlashcardFlip(container: HTMLElement): void {
-  const flashcard = container.querySelector<HTMLElement>('#flashcard')!;
-  flashcard.style.transition = 'transform 0.5s';
-  flashcard.classList.toggle('flashcard--flipped');
-  const isFlipped = flashcard.classList.contains('flashcard--flipped');
+  if (isFlipping) return;
 
-  container.querySelectorAll<HTMLElement>('#flashcardFront button').forEach((button) => {
-    button.tabIndex = isFlipped ? -1 : 0;
-    button.style.visibility = isFlipped ? 'hidden' : '';
-  });
-  container.querySelectorAll<HTMLElement>('#flashcardBack button').forEach((button) => {
-    button.tabIndex = isFlipped ? 0 : -1;
-    button.style.visibility = isFlipped ? '' : 'hidden';
-  });
+  const flashcard = container.querySelector<HTMLElement>('#flashcard')!;
+  const front = container.querySelector<HTMLElement>('#flashcardFront')!;
+  const isFrontActive = front.classList.contains('flashcard__face--active');
+  const nextFaceId = isFrontActive ? 'flashcardBack' : 'flashcardFront';
+
+  isFlipping = true;
+
+  /* Web Animations API — scaleX flip over 0.5s */
+  const animation = flashcard.animate(
+    [
+      { transform: 'scaleX(1)' },
+      { transform: 'scaleX(0)', offset: 0.4 },
+      { transform: 'scaleX(1)' },
+    ],
+    { duration: 500, easing: 'ease-in-out' },
+  );
+
+  /* Swap the active face at 200ms (while card is edge-on) */
+  setTimeout(() => {
+    setActiveFace(container, nextFaceId);
+  }, 200);
+
+  animation.onfinish = () => {
+    isFlipping = false;
+  };
 }

@@ -110,8 +110,9 @@ export function attachKeyboardControls(callbacks: CardControlCallbacks): () => v
       return;
     }
 
-    if (event.key === ' ' && !target.closest('button, select, a')) {
+    if (event.key === ' ' && !target.closest('select, a')) {
       event.preventDefault();
+      if (target.closest('button')) (target.closest('button') as HTMLElement).blur();
       callbacks.onFlip();
     } else if (event.key === 'ArrowRight') {
       event.preventDefault();
