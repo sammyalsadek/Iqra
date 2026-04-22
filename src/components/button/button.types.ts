@@ -49,4 +49,6 @@ export interface ButtonProps {
   active?: boolean;
   /** If provided, renders as an <a> tag with external link icon. */
   href?: string;
+  /** Extra CSS class(es) to append. */
+  className?: string;
 }

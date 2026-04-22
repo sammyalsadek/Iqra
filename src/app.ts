@@ -19,6 +19,7 @@ import { renderSettingsView } from '@/views/settings/settings';
 import { showOnboarding } from '@/components/onboarding/onboarding';
 import { settingsIcon, moonIcon, sunIcon, monitorIcon, arrowLeftIcon } from '@/components/icons';
 import { renderButton } from '@/components/button/button';
+import './app.css';
 
 /** Main content element. */
 let mainElement: HTMLElement;
@@ -167,7 +168,13 @@ function updateThemeButtonContent(): void {
     ariaLabel = 'Theme: dark (click for auto)';
   }
   const temp = document.createElement('div');
-  temp.innerHTML = renderButton({ label, icon, id: 'themeButton', ariaLabel });
+  temp.innerHTML = renderButton({
+    label,
+    icon,
+    id: 'themeButton',
+    ariaLabel,
+    className: 'btn--fixed-theme',
+  });
   const newButton = temp.firstElementChild as HTMLElement;
   newButton.addEventListener('click', handleThemeToggle);
   themeButton.replaceWith(newButton);
@@ -192,7 +199,7 @@ export function initializeApp(data: WordsData): void {
     <div id="navBack"></div>
     <div class="app-nav__right">
       ${renderButton({ label: 'Settings', icon: settingsIcon, id: 'settingsButton', ariaLabel: 'Settings' })}
-      ${renderButton({ label: 'Auto', icon: monitorIcon, id: 'themeButton', ariaLabel: 'Toggle theme' })}
+      ${renderButton({ label: 'Auto', icon: monitorIcon, id: 'themeButton', ariaLabel: 'Toggle theme', className: 'btn--fixed-theme' })}
     </div>`;
 
   themeButton = document.getElementById('themeButton')!;

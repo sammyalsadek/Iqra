@@ -4,7 +4,7 @@ import './button.css';
 
 /** Build CSS class list for a button. */
 function buildClasses(props: ButtonProps): string {
-  const { variant = 'secondary', color, size, fullWidth, active } = props;
+  const { variant = 'secondary', color, size, fullWidth, active, className } = props;
   return [
     'btn',
     `btn--${variant}`,
@@ -12,6 +12,7 @@ function buildClasses(props: ButtonProps): string {
     size ? `btn--${size}` : '',
     fullWidth ? 'btn--full' : '',
     active ? 'btn--active' : '',
+    className || '',
   ]
     .filter(Boolean)
     .join(' ');
