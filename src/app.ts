@@ -142,29 +142,36 @@ function openSettings(): void {
 function initializeTheme(): void {
   const savedTheme = getSavedTheme();
   if (savedTheme && savedTheme !== 'auto') applyTheme(savedTheme);
-  updateThemeButtonIcon();
+  updateThemeButtonContent();
 }
 
 function handleThemeToggle(): void {
   document.documentElement.classList.add('theme-transition');
   cycleTheme();
-  updateThemeButtonIcon();
-  updateThemeMetaColor();
+  updateThemeButtonContent();
   setTimeout(() => document.documentElement.classList.remove('theme-transition'), 500);
 }
 
-function updateThemeButtonIcon(): void {
+function updateThemeButtonContent(): void {
   const savedTheme = getSavedTheme();
-  if (!savedTheme || savedTheme === 'auto') {
-    themeButton.innerHTML = monitorIcon;
-    themeButton.setAttribute('aria-label', 'Theme: auto (click for light)');
-  } else if (savedTheme === 'light') {
-    themeButton.innerHTML = sunIcon;
-    themeButton.setAttribute('aria-label', 'Theme: light (click for dark)');
-  } else {
-    themeButton.innerHTML = moonIcon;
-    themeButton.setAttribute('aria-label', 'Theme: dark (click for auto)');
+  let icon = monitorIcon;
+  let label = 'Auto';
+  let ariaLabel = 'Theme: auto (click for light)';
+  if (savedTheme === 'light') {
+    icon = sunIcon;
+    label = 'Light';
+    ariaLabel = 'Theme: light (click for dark)';
+  } else if (savedTheme === 'dark') {
+    icon = moonIcon;
+    label = 'Dark';
+    ariaLabel = 'Theme: dark (click for auto)';
   }
+  const temp = document.createElement('div');
+  temp.innerHTML = renderButton({ label, icon, id: 'themeButton', ariaLabel });
+  const newButton = temp.firstElementChild as HTMLElement;
+  newButton.addEventListener('click', handleThemeToggle);
+  themeButton.replaceWith(newButton);
+  themeButton = newButton;
   updateThemeMetaColor();
 }
 
@@ -184,8 +191,8 @@ export function initializeApp(data: WordsData): void {
   navElement.innerHTML = `
     <div id="navBack"></div>
     <div class="app-nav__right">
-      ${renderButton({ label: '', icon: settingsIcon, id: 'settingsButton', ariaLabel: 'Settings' })}
-      ${renderButton({ label: '', icon: moonIcon, id: 'themeButton', ariaLabel: 'Toggle theme' })}
+      ${renderButton({ label: 'Settings', icon: settingsIcon, id: 'settingsButton', ariaLabel: 'Settings' })}
+      ${renderButton({ label: 'Auto', icon: monitorIcon, id: 'themeButton', ariaLabel: 'Toggle theme' })}
     </div>`;
 
   themeButton = document.getElementById('themeButton')!;
