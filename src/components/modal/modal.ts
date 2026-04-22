@@ -41,7 +41,10 @@ export function showModal({
 
   document.body.appendChild(overlay);
 
-  const close = () => overlay.remove();
+  const close = () => {
+    overlay.remove();
+    document.removeEventListener('keydown', handleKeyDown, true);
+  };
   overlay.addEventListener('click', (event) => {
     if (event.target === overlay) close();
   });
@@ -51,13 +54,29 @@ export function showModal({
     close();
   });
 
-  const handleEscape = (event: KeyboardEvent) => {
+  const focusableSelector =
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
+      event.stopImmediatePropagation();
       close();
-      document.removeEventListener('keydown', handleEscape);
+      return;
+    }
+    if (event.key === 'Tab') {
+      const focusable = overlay.querySelectorAll<HTMLElement>(focusableSelector);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
   };
-  document.addEventListener('keydown', handleEscape);
+  document.addEventListener('keydown', handleKeyDown, true);
 
   (overlay.querySelector('#modalConfirm') as HTMLElement)?.focus();
 }
